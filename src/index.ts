@@ -2,11 +2,7 @@ import { Client } from 'pg';
 
 async function insertData() {
   const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'postgres',
-    user: 'postgres',
-    password: 'mysecretpassword',
+   connectionString: "postgres://avnadmin:AVNS_LaJ6KdHERlxEUMUHjGm@pg-10540c55-bsingharnav-37d6.g.aivencloud.com:22524/defaultdb?sslmode=require",
   });
 
   try {

@@ -10,37 +10,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
-const connectionString = "postgres://avnadmin:AVNS_LaJ6KdHERlxEUMUHjGm@pg-10540c55-bsingharnav-37d6.g.aivencloud.com:22524/defaultdb?sslmode=require";
-function createUsersTable() {
+function insertData() {
     return __awaiter(this, void 0, void 0, function* () {
         const client = new pg_1.Client({
-            connectionString: connectionString,
-            ssl: {
-                rejectUnauthorized: false // This will ignore the self-signed certificate
-            }
+            connectionString: "postgres://avnadmin:AVNS_LaJ6KdHERlxEUMUHjGm@pg-10540c55-bsingharnav-37d6.g.aivencloud.com:22524/defaultdb?sslmode=require",
         });
         try {
-            yield client.connect();
-            const result = yield client.query(`
-            CREATE TABLE users (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(50) UNIQUE NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-            );
-        `);
-            console.log('Table created successfully:', result);
+            yield client.connect(); // Ensure client connection is established
+            const insertQuery = "INSERT INTO users (username, email, password) VALUES ('username2', 'user3@example.com', 'user_password');";
+            const res = yield client.query(insertQuery);
+            console.log('Insertion success:', res); // Output insertion result
         }
         catch (err) {
-            console.error('Error creating table:', err);
+            console.error('Error during the insertion:', err);
         }
         finally {
-            yield client.end();
+            yield client.end(); // Close the client connection
         }
     });
 }
-createUsersTable();
+insertData();
+
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-
